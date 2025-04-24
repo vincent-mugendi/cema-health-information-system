@@ -11,3 +11,6 @@ DATABASE_NAME = os.getenv("DATABASE_NAME")
 # Initialize MongoDB client
 client = AsyncIOMotorClient(MONGODB_URI)
 db = client[DATABASE_NAME]
+
+def get_database():
+    return db
