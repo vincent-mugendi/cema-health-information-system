@@ -1,19 +1,33 @@
-
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getDashboardStats } from "@/services/apiService";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+/**
+ * Dashboard component for displaying key statistics and program enrollment chart.
+ * 
+ * Fetches and presents:
+ * - Total clients
+ * - Total health programs
+ * - Total enrollments
+ * - Program-wise enrollment statistics via bar chart
+ * 
+ * @returns {JSX.Element} The dashboard UI
+ */
 const Dashboard = () => {
   const [stats, setStats] = useState<{
     totalClients: number;
     totalPrograms: number;
     totalEnrollments: number;
-    programStats: {program: string; count: number}[];
+    programStats: { program: string; count: number }[];
   } | null>(null);
   
   const [loading, setLoading] = useState(true);
 
+  /**
+   * Fetches dashboard statistics from the backend service.
+   * Handles loading and error state appropriately.
+   */
   useEffect(() => {
     const loadStats = async () => {
       try {
@@ -25,7 +39,7 @@ const Dashboard = () => {
         setLoading(false);
       }
     };
-    
+
     loadStats();
   }, []);
 
