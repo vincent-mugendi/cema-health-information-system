@@ -33,3 +33,4 @@ htmlcov/
 
 # Pydantic generated JSON schema cache
 *.json.schema
+.env
