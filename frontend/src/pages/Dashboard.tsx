@@ -96,7 +96,7 @@ const Dashboard = () => {
       </Card>
       
       <div className="bg-health-light p-6 rounded-lg border border-health-teal border-opacity-20">
-        <h2 className="text-lg font-semibold text-health-teal mb-2">Welcome to Health Compass</h2>
+        <h2 className="text-lg font-semibold text-health-teal mb-2">Welcome to CEMA Health Information System</h2>
         <p className="text-gray-700">
           This health information system helps you manage client health records and program enrollments.
           Use the navigation menu to access different features of the system.

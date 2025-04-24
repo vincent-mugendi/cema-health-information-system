@@ -49,9 +49,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           <div className="flex items-center justify-between p-4 border-b border-gray-200">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-health-teal rounded-md flex items-center justify-center">
-                <span className="text-white font-semibold">HC</span>
+                <span className="text-white font-semibold">CM</span>
               </div>
-              <h1 className="text-xl font-bold text-health-teal">Health Compass</h1>
+              <h1 className="text-xl font-bold text-health-teal">CEMA Health</h1>
             </div>
             <button className="md:hidden" onClick={toggleSidebar}>
               <XIcon size={24} className="text-gray-500" />
@@ -96,7 +96,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           {children}
         </main>
         <footer className="bg-white border-t border-gray-200 py-3 px-6">
-          <p className="text-sm text-center text-gray-500">© 2025 Health Compass - CEMA Internship Task</p>
+          <p className="text-sm text-center text-gray-500">© 2025 - Vincent Mugendi - CEMA Internship Task </p>
         </footer>
       </div>
     </div>
