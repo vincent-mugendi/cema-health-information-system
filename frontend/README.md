@@ -1,54 +1,101 @@
-# React + TypeScript + Vite
+# CEMA Health Information System – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**CEMA Health Information System** is a modern, modular healthcare information system designed to help healthcare providers manage client data, program enrollments, and visualize key health metrics. This frontend application is built using **React**, **TypeScript**, **Vite**, **Tailwind CSS**, and **shadcn/ui**, following best practices for scalability and maintainability.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- Manage clients, health programs, and enrollments
+- Interactive dashboard with real-time charts
+- Integrated routing and state management
+- Component-based design using `shadcn/ui`
+- Custom healthcare-themed Tailwind styling
+- API layer for easy backend integration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📦 Tech Stack
+
+- **Framework:** React + Vite + TypeScript  
+- **UI:** Tailwind CSS + shadcn/ui + lucide-react  
+- **Routing:** React Router  
+- **Data Handling:** @tanstack/react-query  
+- **Charts:** Recharts  
+- **Utilities:** clsx, tailwind-merge, date-fns  
+
+---
+
+## 🛠️ Getting Started
+
+### 1. Prerequisites
+
+Ensure the following are installed:
+
+- [Node.js](https://nodejs.org/) (v18+ recommended)
+- npm or yarn
+
+### 2. Clone & Install
+
+```bash
+git clone https://github.com/vincent-mugendi/cema-health-information-system.git
+cd frontend
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 3. Run Development Server
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm run dev
 ```
+
+Visit `http://localhost:5173` in your browser.
+
+---
+
+## 🧱 Project Structure
+
+```plaintext
+src/
+│
+├── components/        # Reusable UI + layout components
+│   ├── layout/        # MainLayout and sidebar
+│   └── ui/            # shadcn/ui-based elements
+│
+├── pages/             # Dashboard, Clients, Programs, etc.
+├── services/          # Mock API interactions
+├── types/             # TypeScript interfaces
+├── lib/               # Utility functions
+├── App.tsx            # Main app with router setup
+└── main.tsx           # App entry point
+```
+
+---
+
+## 🎨 Custom Tailwind Theme
+
+Custom colors for healthcare branding are defined in `tailwind.config.ts`:
+
+```ts
+colors: {
+  "health-teal": "#14b8a6",
+  "health-blue": "#0ea5e9",
+  "health-indigo": "#6366f1",
+  "health-light": "#f0fdfa",
+}
+```
+
+---
+
+## ⚙️ Key Scripts
+
+| Script          | Purpose                       |
+|-----------------|-------------------------------|
+| `npm run dev`   | Run the development server    |
+| `npm run build` | Build for production          |
+| `npm run preview`| Preview production build     |
+---
+
+## 📝 License
+
+MIT © 2025 - Vincent Mugendi - CEMA Internship Project
