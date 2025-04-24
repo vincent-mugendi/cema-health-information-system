@@ -1,4 +1,3 @@
-
 import { Client, Program, Enrollment } from "@/types";
 
 // Mock data
@@ -22,17 +21,36 @@ let enrollments: Enrollment[] = [
 ];
 
 // Helper function to generate IDs
+/**
+ * Generates a random ID string.
+ * @returns {string} A random string representing an ID.
+ */
 const generateId = () => Math.random().toString(36).substring(2, 11);
 
 // Simulate API delay
+/**
+ * Simulates an API delay for a specified duration.
+ * @param {number} ms The duration in milliseconds to wait before resolving the promise.
+ * @returns {Promise<void>} A promise that resolves after the specified delay.
+ */
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Client APIs
+
+/**
+ * Fetches the list of all clients.
+ * @returns {Promise<Client[]>} A promise that resolves with an array of all clients.
+ */
 export const fetchClients = async (): Promise<Client[]> => {
   await delay(300);
   return [...clients];
 };
 
+/**
+ * Fetches a client by their ID, including enrolled programs.
+ * @param {string} id The ID of the client to fetch.
+ * @returns {Promise<Client | undefined>} A promise that resolves with the client object or undefined if not found.
+ */
 export const fetchClientById = async (id: string): Promise<Client | undefined> => {
   await delay(200);
   const client = clients.find(c => c.id === id);
@@ -50,6 +68,11 @@ export const fetchClientById = async (id: string): Promise<Client | undefined> =
   return undefined;
 };
 
+/**
+ * Searches clients by a query string.
+ * @param {string} query The search query string.
+ * @returns {Promise<Client[]>} A promise that resolves with an array of matching clients.
+ */
 export const searchClients = async (query: string): Promise<Client[]> => {
   await delay(300);
   if (!query) return [];
@@ -60,6 +83,11 @@ export const searchClients = async (query: string): Promise<Client[]> => {
   );
 };
 
+/**
+ * Creates a new client.
+ * @param {Omit<Client, "id">} client The client object without the `id` field.
+ * @returns {Promise<Client>} A promise that resolves with the created client object, including the generated ID.
+ */
 export const createClient = async (client: Omit<Client, "id">): Promise<Client> => {
   await delay(500);
   const newClient = { ...client, id: generateId() };
@@ -68,11 +96,21 @@ export const createClient = async (client: Omit<Client, "id">): Promise<Client> 
 };
 
 // Program APIs
+
+/**
+ * Fetches the list of all programs.
+ * @returns {Promise<Program[]>} A promise that resolves with an array of all programs.
+ */
 export const fetchPrograms = async (): Promise<Program[]> => {
   await delay(300);
   return [...programs];
 };
 
+/**
+ * Creates a new program.
+ * @param {Omit<Program, "id">} program The program object without the `id` field.
+ * @returns {Promise<Program>} A promise that resolves with the created program object, including the generated ID.
+ */
 export const createProgram = async (program: Omit<Program, "id">): Promise<Program> => {
   await delay(500);
   const newProgram = { ...program, id: generateId() };
@@ -81,6 +119,12 @@ export const createProgram = async (program: Omit<Program, "id">): Promise<Progr
 };
 
 // Enrollment APIs
+
+/**
+ * Enrolls a client in a program.
+ * @param {Enrollment} enrollment The enrollment object containing client ID and program ID.
+ * @returns {Promise<boolean>} A promise that resolves with `true` if enrollment was successful, `false` otherwise.
+ */
 export const enrollClient = async (enrollment: Enrollment): Promise<boolean> => {
   await delay(500);
   
@@ -105,6 +149,11 @@ export const enrollClient = async (enrollment: Enrollment): Promise<boolean> => 
   return true;
 };
 
+/**
+ * Gets the list of clients enrolled in a specific program.
+ * @param {string} programId The ID of the program.
+ * @returns {Promise<Client[]>} A promise that resolves with an array of clients enrolled in the specified program.
+ */
 export const getClientsByProgramId = async (programId: string): Promise<Client[]> => {
   await delay(300);
   
@@ -114,6 +163,10 @@ export const getClientsByProgramId = async (programId: string): Promise<Client[]
   );
 };
 
+/**
+ * Gets various statistics for the dashboard, including client, program, and enrollment counts.
+ * @returns {Promise<{totalClients: number, totalPrograms: number, totalEnrollments: number, programStats: {program: string, count: number}[]}>} A promise that resolves with the dashboard statistics.
+ */
 export const getDashboardStats = async () => {
   await delay(300);
   
