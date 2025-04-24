@@ -1,3 +1,10 @@
+/**
+ * Clients Component
+ * 
+ * Displays a list of clients, allows registering new clients,
+ * and includes a search feature. It uses dialog modals and form controls
+ * to manage new client creation and search interactions.
+ */
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
@@ -16,18 +23,23 @@ const Clients = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [searching, setSearching] = useState(false);
-  
+
   // New client form state
   const [newClientName, setNewClientName] = useState('');
   const [newClientAge, setNewClientAge] = useState('');
   const [newClientGender, setNewClientGender] = useState<'Male' | 'Female' | 'Other'>('Male');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
-  // Initial load of clients
+
+  /**
+   * Load initial list of clients on component mount
+   */
   useEffect(() => {
     loadClients();
   }, []);
-  
+
+  /**
+   * Fetches all clients from the API and updates state
+   */
   const loadClients = async () => {
     try {
       setLoading(true);
@@ -40,13 +52,16 @@ const Clients = () => {
       setLoading(false);
     }
   };
-  
+
+  /**
+   * Searches for clients based on search query
+   */
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
       await loadClients();
       return;
     }
-    
+
     try {
       setSearching(true);
       const results = await searchClients(searchQuery);
@@ -58,29 +73,32 @@ const Clients = () => {
       setSearching(false);
     }
   };
-  
+
+  /**
+   * Validates and submits new client data to the API
+   */
   const handleCreateClient = async () => {
     if (!newClientName.trim()) {
       toast.error("Client name is required");
       return;
     }
-    
+
     const age = parseInt(newClientAge);
     if (isNaN(age) || age <= 0) {
       toast.error("Please enter a valid age");
       return;
     }
-    
+
     try {
       const newClient = await createClient({
         name: newClientName,
         age,
         gender: newClientGender
       });
-      
+
       setClients(prev => [...prev, newClient]);
       toast.success("Client created successfully");
-      
+
       // Reset form
       setNewClientName('');
       setNewClientAge('');
@@ -91,7 +109,12 @@ const Clients = () => {
       toast.error("Failed to create client");
     }
   };
-  
+
+  /**
+   * Renders individual client card component
+   * @param client - The client object to display
+   * @returns JSX.Element
+   */
   const ClientCard = ({ client }: { client: Client }) => (
     <Card className="hover:border-health-teal transition-colors">
       <CardContent className="p-4">
@@ -109,9 +132,10 @@ const Clients = () => {
       </CardContent>
     </Card>
   );
-  
+
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Header and new client registration dialog */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-bold text-gray-800">Clients</h1>
         
@@ -126,6 +150,7 @@ const Clients = () => {
               <DialogTitle>Register New Client</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-2">
+              {/* Client name input */}
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
                 <Input 
@@ -135,6 +160,7 @@ const Clients = () => {
                   onChange={(e) => setNewClientName(e.target.value)}
                 />
               </div>
+              {/* Client age input */}
               <div className="space-y-2">
                 <Label htmlFor="age">Age</Label>
                 <Input 
@@ -145,6 +171,7 @@ const Clients = () => {
                   onChange={(e) => setNewClientAge(e.target.value)}
                 />
               </div>
+              {/* Client gender selection */}
               <div className="space-y-2">
                 <Label>Gender</Label>
                 <RadioGroup 
@@ -165,6 +192,7 @@ const Clients = () => {
                   </div>
                 </RadioGroup>
               </div>
+              {/* Submit client */}
               <Button className="w-full bg-health-teal hover:bg-health-teal/90" onClick={handleCreateClient}>
                 Register Client
               </Button>
@@ -172,7 +200,8 @@ const Clients = () => {
           </DialogContent>
         </Dialog>
       </div>
-      
+
+      {/* Client search input */}
       <div className="flex gap-2">
         <div className="relative flex-grow">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -188,7 +217,8 @@ const Clients = () => {
           Search
         </Button>
       </div>
-      
+
+      {/* Clients list */}
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <div className="animate-pulse text-health-teal">Loading clients...</div>
