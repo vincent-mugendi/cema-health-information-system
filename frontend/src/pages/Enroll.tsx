@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +13,12 @@ import { fetchClients, fetchPrograms, enrollClient } from '@/services/apiService
 import { Client, Program } from '@/types';
 import { CheckIcon } from 'lucide-react';
 
+/**
+ * Enroll component for enrolling clients into health programs.
+ * Provides a UI for selecting clients and programs and enrolling the client.
+ * 
+ * @returns {JSX.Element} The Enroll component UI.
+ */
 const Enroll = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [programs, setPrograms] = useState<Program[]>([]);
@@ -23,6 +28,10 @@ const Enroll = () => {
   const [enrolling, setEnrolling] = useState(false);
   const [enrollmentSuccess, setEnrollmentSuccess] = useState(false);
   
+  /**
+   * Loads client and program data from the API when the component mounts.
+   * Sets the state for clients and programs, and handles loading and error states.
+   */
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -45,6 +54,10 @@ const Enroll = () => {
     loadData();
   }, []);
   
+  /**
+   * Handles the enrollment of a client into a selected health program.
+   * Validates inputs, makes the API call to enroll the client, and shows appropriate feedback.
+   */
   const handleEnroll = async () => {
     // Validate selections
     if (!selectedClientId) {
