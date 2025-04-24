@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,20 +7,34 @@ import { fetchClientById } from "@/services/apiService";
 import { Client } from "@/types";
 import { ArrowLeft } from 'lucide-react';
 
+/**
+ * Displays detailed information about a specific client, including
+ * personal data and enrolled health programs. Provides API access
+ * information and error handling for loading states.
+ *
+ * @component
+ */
 const ClientDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [client, setClient] = useState<Client | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   useEffect(() => {
+    /**
+     * Fetches client data from the API based on the URL parameter `id`.
+     * Handles loading state, error messaging, and sets the client state.
+     *
+     * @async
+     * @function loadClient
+     */
     const loadClient = async () => {
       if (!id) {
         setError("Client ID is missing");
         setLoading(false);
         return;
       }
-      
+
       try {
         const data = await fetchClientById(id);
         if (data) {
@@ -36,10 +49,10 @@ const ClientDetail = () => {
         setLoading(false);
       }
     };
-    
+
     loadClient();
   }, [id]);
-  
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -47,7 +60,7 @@ const ClientDetail = () => {
       </div>
     );
   }
-  
+
   if (error || !client) {
     return (
       <div className="text-center py-12 bg-red-50 rounded-lg">
@@ -59,7 +72,7 @@ const ClientDetail = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center gap-2">
@@ -70,7 +83,7 @@ const ClientDetail = () => {
         </Button>
         <h1 className="text-2xl font-bold text-gray-800">Client Profile</h1>
       </div>
-      
+
       <Card className="overflow-hidden">
         <div className="h-12 bg-health-teal" />
         <CardHeader className="pb-2">
@@ -79,7 +92,7 @@ const ClientDetail = () => {
             <Badge className="bg-health-indigo">{`ID: ${client.id}`}</Badge>
           </CardTitle>
         </CardHeader>
-        
+
         <CardContent className="space-y-6">
           {/* Basic Information */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -87,26 +100,26 @@ const ClientDetail = () => {
               <p className="text-sm font-medium text-gray-500">Age</p>
               <p className="text-lg font-medium">{client.age} years</p>
             </div>
-            
+
             <div className="bg-gray-50 p-4 rounded-md">
               <p className="text-sm font-medium text-gray-500">Gender</p>
               <p className="text-lg font-medium">{client.gender}</p>
             </div>
-            
+
             <div className="bg-gray-50 p-4 rounded-md">
               <p className="text-sm font-medium text-gray-500">Enrolled Programs</p>
               <p className="text-lg font-medium">{client.enrolledPrograms?.length || 0}</p>
             </div>
           </div>
-          
+
           {/* Enrolled Programs */}
           <div>
             <h3 className="text-lg font-medium mb-3">Enrolled Health Programs</h3>
-            
+
             {client.enrolledPrograms && client.enrolledPrograms.length > 0 ? (
               <div className="grid gap-3">
                 {client.enrolledPrograms.map((program) => (
-                  <div 
+                  <div
                     key={program.id}
                     className="bg-white border border-gray-200 rounded-md p-4 hover:border-health-teal transition-colors"
                   >
@@ -131,7 +144,7 @@ const ClientDetail = () => {
               </div>
             )}
           </div>
-          
+
           {/* API Access */}
           <div className="bg-health-light p-4 rounded-md border border-health-teal border-opacity-20">
             <h3 className="text-lg font-medium mb-2">API Access</h3>
