@@ -32,7 +32,12 @@ const Dashboard = () => {
     const loadStats = async () => {
       try {
         const data = await getDashboardStats();
-        setStats(data);
+        setStats({
+          totalClients: data.total_clients,
+          totalPrograms: data.total_programs,
+          totalEnrollments: data.total_enrollments,
+          programStats: data.program_stats,
+        });
       } catch (error) {
         console.error("Failed to fetch dashboard stats:", error);
       } finally {
@@ -89,23 +94,27 @@ const Dashboard = () => {
           <CardTitle>Program Enrollment Statistics</CardTitle>
         </CardHeader>
         <CardContent className="h-80">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={stats?.programStats || []}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="program" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="count" fill="#14b8a6" name="Enrollments" />
-            </BarChart>
-          </ResponsiveContainer>
+          {stats?.programStats?.length ? (
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={stats?.programStats || []}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="program" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="count" fill="#14b8a6" name="Enrollments" />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <div>No program stats available</div>
+          )}
         </CardContent>
       </Card>
       

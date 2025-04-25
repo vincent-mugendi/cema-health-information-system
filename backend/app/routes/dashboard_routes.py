@@ -18,9 +18,14 @@ async def get_dashboard_stats(db: AsyncIOMotorDatabase = Depends(get_database)):
             }
         },
         {
+            "$addFields": {
+                "program_id_str": {"$toString": "$_id"}
+            }
+        },
+        {
             "$lookup": {
                 "from": "programs",
-                "localField": "_id",
+                "localField": "program_id_str",
                 "foreignField": "id",
                 "as": "program"
             }
