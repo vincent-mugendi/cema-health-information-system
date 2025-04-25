@@ -60,47 +60,92 @@ const Enroll = () => {
    */
   const handleEnroll = async () => {
     // Validate selections
-    if (!selectedClientId) {
-      toast.error("Please select a client");
+    if (!selectedClientId || !selectedProgramId) return;
+
+    // Check if client is already enrolled in the selected program
+    const isClientEnrolled = clients.some(client =>
+      client.id === selectedClientId &&
+      client.enrolledPrograms && // Ensure enrolledPrograms is not undefined
+      client.enrolledPrograms.some((program: Program) => program.id === selectedProgramId)
+    );
+
+    if (isClientEnrolled) {
+      toast.error("This client is already enrolled in this program.");
       return;
     }
-    
-    if (!selectedProgramId) {
-      toast.error("Please select a health program");
-      return;
-    }
-    
+
     try {
       setEnrolling(true);
-      const success = await enrollClient({
-        clientId: selectedClientId,
-        programId: selectedProgramId
-      });
       
-      if (success) {
-        toast.success("Client enrolled successfully");
-        setEnrollmentSuccess(true);
-        
-        // Reset form after 2 seconds
-        setTimeout(() => {
-          setSelectedClientId('');
-          setSelectedProgramId('');
-          setEnrollmentSuccess(false);
-        }, 2000);
-      } else {
-        toast.error("Enrollment failed. Client may already be enrolled in this program.");
-      }
-    } catch (error) {
-      console.error("Enrollment failed:", error);
-      toast.error("Failed to enroll client");
+      // Create the enrollment document
+      const message = await enrollClient({
+        client_id: selectedClientId,
+        program_id: selectedProgramId
+      });
+
+      alert(message);
+
+      // Now update the client's enrolled_programs in the clients collection
+      const updatedClient = await updateClientEnrolledPrograms(selectedClientId, selectedProgramId);
+
+      // Refresh the clients list after enrollment
+      const updatedClients = await fetchClients();
+      setClients(updatedClients);  // Update the clients state with the new list
+      setEnrollmentSuccess(true);
+    } catch (error: any) {
+      console.error('Enrollment error:', error);
+      alert(
+        error?.response?.data?.detail ||
+        'An error occurred during enrollment.'
+      );
     } finally {
       setEnrolling(false);
     }
   };
-  
+
+  /**
+   * Updates the enrolled_programs array in the client's document
+   * after a successful enrollment.
+   */
+  const updateClientEnrolledPrograms = async (clientId: string, programId: string) => {
+    try {
+      // Log the clientId to ensure it's valid
+      console.log('Updating client with ID:', clientId);
+
+      const response = await fetch(`/clients/${clientId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          $push: {
+            enrolled_programs: {
+              id: programId,
+              enrolled_at: new Date().toISOString()
+            }
+          }
+        })
+      });
+
+      if (!response.ok) {
+        // Log detailed error if response is not OK
+        const errorDetails = await response.json();
+        console.error('Error details:', errorDetails);
+        throw new Error('Failed to update client enrolled programs');
+      }
+
+      // Log success if everything goes well
+      console.log('Client updated successfully:', await response.json());
+      return await response.json();
+    } catch (error) {
+      console.error('Error updating client enrolled programs:', error);
+      throw error;
+    }
+  };
+
   const selectedClient = clients.find(c => c.id === selectedClientId);
   const selectedProgram = programs.find(p => p.id === selectedProgramId);
-  
+
   return (
     <div className="space-y-6 animate-fade-in">
       <h1 className="text-2xl font-bold text-gray-800">Enroll Clients in Programs</h1>
@@ -210,11 +255,10 @@ const Enroll = () => {
       <Card>
         <CardContent className="p-4">
           <h3 className="font-medium mb-2">How Enrollment Works</h3>
-          <ol className="list-decimal pl-5 space-y-2 text-sm text-gray-600">
-            <li>Select a client from the dropdown menu</li>
-            <li>Select a health program for enrollment</li>
-            <li>Click the "Enroll Client" button to complete the process</li>
-            <li>The client will now be shown as enrolled in that program on their profile</li>
+          <ol className="list-decimal pl-5 space-y-2 text-sm">
+            <li>Choose a client to enroll.</li>
+            <li>Select a health program for the client.</li>
+            <li>Click the "Enroll Client" button to finalize the enrollment.</li>
           </ol>
         </CardContent>
       </Card>

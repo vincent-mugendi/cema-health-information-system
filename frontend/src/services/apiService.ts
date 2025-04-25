@@ -40,10 +40,11 @@ export const createProgram = async (program: Omit<Program, "id">): Promise<Progr
 
 // Enrollment APIs
 
-export const enrollClient = async (enrollment: Enrollment): Promise<boolean> => {
+export const enrollClient = async (enrollment: Enrollment): Promise<string> => {
   const response = await axios.post(`${API_URL}/enrollments`, enrollment);
-  return response.data.success; // Assuming the backend returns { success: true/false }
+  return response.data.message; // Now it matches the backend
 };
+
 
 export const getClientsByProgramId = async (programId: string): Promise<Client[]> => {
   const response = await axios.get(`${API_URL}/programs/${programId}/clients`);
