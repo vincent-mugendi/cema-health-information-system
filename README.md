@@ -6,12 +6,13 @@ This repository contains both the **Frontend** and **Backend** parts of the syst
 
 ---
 
-## 🌐 Explore the App
+## 🌐 Explore the App 🚨 
+**Explore the CEMA Health Information System in Action**  
+🔗 👉 [**🌐 Click Here to Launch the App**](https://cema-health-information-system-prod.vercel.app/)
 
-You can explore the deployed version of the CEMA Health Information System here:  
-👉 [**Live Demo on Vercel**](https://vercel.com/vincent-mugendis-projects/cema-health-information-system-prod)
-
-Use this version to test the user interface and get a feel for how client and program management works in real-time.
+> ✅ View the real-time dashboard  
+> ✅ Manage clients and programs  
+> ✅ Experience the full workflow in a live environment 
 
 ---
 
