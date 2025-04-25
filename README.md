@@ -6,6 +6,15 @@ This repository contains both the **Frontend** and **Backend** parts of the syst
 
 ---
 
+## 🌐 Explore the App 🚨 
+**Explore the CEMA Health Information System in Action**  
+🔗 👉 [**🌐 Click Here to Launch the App**](https://cema-health-information-system-prod.vercel.app/)
+
+> ✅ View the real-time dashboard  
+> ✅ Manage clients and programs  
+> ✅ Experience the full workflow in a live environment 
+
+---
 ## 🚀 Features
 
 - **Frontend:**
