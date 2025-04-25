@@ -15,12 +15,6 @@ This repository contains both the **Frontend** and **Backend** parts of the syst
 > ✅ Experience the full workflow in a live environment 
 
 ---
-
-**CEMA Health Information System** is a comprehensive healthcare solution that enables healthcare providers to manage client data, program enrollments, and visualize health metrics efficiently. It is built using a modern, modular architecture with a frontend and backend that work seamlessly together.
-
-This repository contains both the **Frontend** and **Backend** parts of the system, which are detailed below.
-
-
 ## 🚀 Features
 
 - **Frontend:**
