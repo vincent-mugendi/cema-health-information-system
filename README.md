@@ -6,6 +6,20 @@ This repository contains both the **Frontend** and **Backend** parts of the syst
 
 ---
 
+## 🌐 Explore the App
+
+You can explore the deployed version of the CEMA Health Information System here:  
+👉 [**Live Demo on Vercel**](https://vercel.com/vincent-mugendis-projects/cema-health-information-system-prod)
+
+Use this version to test the user interface and get a feel for how client and program management works in real-time.
+
+---
+
+**CEMA Health Information System** is a comprehensive healthcare solution that enables healthcare providers to manage client data, program enrollments, and visualize health metrics efficiently. It is built using a modern, modular architecture with a frontend and backend that work seamlessly together.
+
+This repository contains both the **Frontend** and **Backend** parts of the system, which are detailed below.
+
+
 ## 🚀 Features
 
 - **Frontend:**
