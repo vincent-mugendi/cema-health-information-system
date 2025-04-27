@@ -160,7 +160,7 @@ Explore all endpoints at: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/doc
 - 📄 [Solution Presentation (PDF)](presentations/solution-presentation.pdf)  
   A detailed overview of the CEMA Health Information System, including design decisions, features, and architecture.
 
-- 📹 [Live Demo (Video)](presentations/live-demo.mp4)  
+- 📹 [Live Demo (Video)](presentations/live-demo-presentation.mp4)  
   Watch a live walkthrough of the system, demonstrating key features and user interactions.
 
 ---
